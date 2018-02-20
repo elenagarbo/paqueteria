@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,21 +30,26 @@ public class ArticuloDAO {
 
 	// insertar artículo
 	public boolean insertar(Articulo articulo) throws SQLException {
-		String sql = "INSERT INTO articulos (id, origen, destino, paquete, fechallegada, remitente, transportista, precio) VALUES (?, ?, ?,?,?,?,?,?)";
+		String sql = "INSERT INTO articulos (origen, destino, paquete, fechallegada, remitente, transportista, precio) VALUES (?, ?,?,?,?,?,?)";
 //		System.out.println(articulo.getDescripcion());
 		con.conectar();
 		connection = con.getJdbcConnection();
 		PreparedStatement statement = connection.prepareStatement(sql);
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		statement.setString(1, null);
-		statement.setString(2, articulo.getOrigen());
-		statement.setString(3, articulo.getDestino());
-		statement.setString(4, articulo.getPaquete());
-		statement.setDate(5, articulo.getFechallegada());
-		statement.setString(6, articulo.getRemitente());
-		statement.setString(7, articulo.getTransportista());
-		statement.setDouble(6, articulo.getPrecio());
+	
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		@SuppressWarnings("deprecation")
+//		java.util.Date d=new java.util.Date("1999/10/10");
+//		java.sql.Date date2= new java.sql.Date(d.getTime());
+		
+		
+		statement.setString(1, articulo.getOrigen());
+		statement.setString(2, articulo.getDestino());
+		statement.setString(3, articulo.getPaquete());
+		statement.setString(4,"");
+		statement.setString(5, articulo.getRemitente());
+		statement.setString(6, articulo.getTransportista());
+		statement.setDouble(7, articulo.getPrecio());
 
 		boolean rowInserted = statement.executeUpdate() > 0;
 		statement.close();
@@ -67,16 +72,13 @@ public class ArticuloDAO {
 			String origen = resulSet.getString("origen");
 			String destino = resulSet.getString("destino");
 			String paquete = resulSet.getString("paquete");
-			
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			
-			Date fechallegada = formatter.parse(resulSet.getString("fechallegada"));
-			String remitente = resulSet.getString("existencia");
-			String transportista = resulSet.getString("existencia");
+			Date fechallegada =resulSet.getDate("fechallegada");
+			String remitente = resulSet.getString("remitente");
+			String transportista = resulSet.getString("transportista");
 			Double precio = resulSet.getDouble("precio");
 			
 			
-			Articulo articulo = new Articulo(id, origen, destino, paquete, fechallegada, remitente, transportista, precio);
+			Articulo articulo = new Articulo(id, origen, destino, paquete, "", remitente, transportista, precio);
 			listaArticulos.add(articulo);
 		}
 		con.desconectar();
@@ -84,27 +86,29 @@ public class ArticuloDAO {
 	}
 
 	// obtener por id
-	public Articulo obtenerPorId(int id) throws SQLException, ParseException {
-		Articulo articulo = null;
-
-		String sql = "SELECT * FROM articulos WHERE id= ? ";
-		con.conectar();
-		connection = con.getJdbcConnection();
-		PreparedStatement statement = connection.prepareStatement(sql);
-		statement.setInt(1, id);
-
-		ResultSet res = statement.executeQuery();
-		if (res.next()) {
-			
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			articulo = new Articulo(res.getInt("id"), res.getString("origen"), res.getString("destino"), res.getString("paquete"), formatter.parse("fechallegada"),
-					res.getString("remitente"),res.getString("transportista"), res.getDouble("precio"));
-		}
-		res.close();
-		con.desconectar();
-
-		return articulo;
-	}
+//	public Articulo obtenerPorId(int id) throws SQLException, ParseException {
+//		Articulo articulo = null;
+//
+//		String sql = "SELECT * FROM articulos WHERE id= ? ";
+//		con.conectar();
+//		connection = con.getJdbcConnection();
+//		PreparedStatement statement = connection.prepareStatement(sql);
+//		statement.setInt(1, id);
+//
+//		ResultSet res = statement.executeQuery();
+//		if (res.next()) {
+//			
+//			
+//			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//			articulo = new Articulo(res.getInt("id"), res.getString("origen"), res.getString("destino"), res.getString("paquete"), formatter.parse("fechallegada"),
+//					res.getString("remitente"),res.getString("transportista"), res.getDouble("precio"));
+//		}
+//		
+//		res.close();
+//		con.desconectar();
+//
+//		return articulo;
+//	}
 
 	// actualizar
 //	public boolean actualizar(Articulo articulo) throws SQLException {

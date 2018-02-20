@@ -18,15 +18,15 @@
 	
 	<table border="1" width="100%">
 		<tr>
-		 <td> ID</td>
-		 <td> ORIGEN</td>
-		 <td> DESTINO</td>
+		 <td>ID</td>
+		 <td>ORIGEN</td>
+		 <td>DESTINO</td>
 		 <td>PAQUETE</td>
 		 <td>FECHA LLEGADA</td>
 		 <td>REMITENTE</td>
 		 <td>TRANSPORTISTA</td>
 		 <td>PRECIO</td>
-		 <td colspan=2>ACCIONES</td>
+<!-- 		 <td colspan=2>ACCIONES</td> -->
 		</tr>
 		<c:forEach var="articulo" items="${lista}">
 			<tr>
@@ -38,6 +38,7 @@
 				<td><c:out value="${articulo.remitente}"/></td>
 				<td><c:out value="${articulo.transportista}"/></td>
 				<td><c:out value="${articulo.precio}"/></td>
+				
 				<td><a href="adminArticulo?action=showedit&id=<c:out value="${articulo.id}" />">Editar</a></td>
 				<td><a href="adminArticulo?action=eliminar&id=<c:out value="${articulo.id}"/>">Eliminar</a> </td>				
 			</tr>

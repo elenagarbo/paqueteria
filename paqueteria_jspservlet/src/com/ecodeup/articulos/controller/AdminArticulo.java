@@ -2,8 +2,10 @@ package com.ecodeup.articulos.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -41,7 +43,7 @@ public class AdminArticulo extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("Hola Servlet..");
+		System.out.println("Hola Servlet get..");
 		String action = request.getParameter("action");
 		System.out.println(action);
 		try {
@@ -59,9 +61,9 @@ public class AdminArticulo extends HttpServlet {
 			case "mostrar":
 				mostrar(request, response);
 				break;
-			case "showedit":
-				showEditar(request, response);
-				break;	
+//			case "showedit":
+//				showEditar(request, response);
+//				break;	
 			case "buscar":
 				buscar(request, response);
 				break;	
@@ -84,7 +86,7 @@ public class AdminArticulo extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("Hola Servlet..");
+		System.out.println("Hola Servlet post..");
 		doGet(request, response);
 	}
 	
@@ -96,16 +98,21 @@ public class AdminArticulo extends HttpServlet {
 	
 
 	private void registrar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, NumberFormatException, ParseException {
+		System.out.println("dentro de registrar");
+//		String string = request.getParameter("fechallegada");
+//		DateFormat format = new SimpleDateFormat("yyyy-dd-MM");
+//		Date date = format.parse(string);
 		
-		 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	  
-		Articulo articulo = new Articulo(0, request.getParameter("origen"), request.getParameter("destino"), request.getParameter("paquete"), formatter.parse("fechallegada"), request.getParameter("remitente"), request.getParameter("transportista"),Double.parseDouble(request.getParameter("precio")) );
+		Articulo articulo = new Articulo(0, request.getParameter("origen"),request.getParameter("destino"),request.getParameter("paquete"),"",request.getParameter("remitente"),request.getParameter("transportista"),
+				Double.parseDouble(request.getParameter("precio")));
 		
-		
-		articuloDAO.insertar(articulo);
-		
+		System.out.println("dentro de registrar despues date");
+	
+	System.out.println(articuloDAO.insertar(articulo));
 		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request, response);
+		System.out.println("dentro de registrar despues date2");
 	}
 	
 	private void nuevo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -127,13 +134,13 @@ public class AdminArticulo extends HttpServlet {
 		dispatcher.forward(request, response);
 	}	
 	
-	private void showEditar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, NumberFormatException, ParseException {
-		Articulo articulo = articuloDAO.obtenerPorId(Integer.parseInt(request.getParameter("id")));
-		request.setAttribute("articulo", articulo);
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/vista/editar.jsp");
-		dispatcher.forward(request, response);
-	}
+//	private void showEditar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, NumberFormatException, ParseException {
+//		Articulo articulo = articuloDAO.obtenerPorId(Integer.parseInt(request.getParameter("id")));
+//		request.setAttribute("articulo", articulo);
+//		
+//		RequestDispatcher dispatcher = request.getRequestDispatcher("/vista/editar.jsp");
+//		dispatcher.forward(request, response);
+//	}
 	
 //	private void editar(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
 //		Articulo articulo = new Articulo(Integer.parseInt(request.getParameter("id")), request.getParameter("codigo"), request.getParameter("nombre"), request.getParameter("descripcion"), Double.parseDouble(request.getParameter("existencia")), Double.parseDouble(request.getParameter("precio")));

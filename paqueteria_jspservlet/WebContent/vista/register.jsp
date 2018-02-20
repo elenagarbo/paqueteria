@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>Registrar Artículo</h1>
-	<form action="adminArticulo?action=register" method="post">
+	<form action="../adminArticulo?action=register" method="post">
 		<table border="1" align="center">
 		<tr>
 			<td>Origen:</a></td>		
@@ -20,11 +20,18 @@
 		</tr>
 		<tr>
 			<td>Paquete:</a></td>		
-			<td><input type="text" name="cantidad"/></td>	
+			<td>
+			<select name="paquete">
+			<option>S</option>
+			<option>M</option>
+			<option>P</option>
+			
+			</select>
+				
 		</tr>
 		<tr>
 			<td>Fecha llegada:</a></td>		
-			<td><input type="text" name="fechallegada"/></td>	
+			<td><input type="date" name="fechallegada"></td>	
 		</tr>
 		<tr>
 			<td>Remitente:</a></td>		

@@ -1,19 +1,18 @@
 package com.ecodeup.articulos.model;
 
-import java.util.Date;
 
 public class Articulo {
 	private int id;
 	private String origen;
 	private String destino;
 	private String paquete;
-	private Date fechallegada;
+	private String fechallegada;
 	private String remitente;
 	private String transportista;
 	private double precio;
 	
 
-	public Articulo(int id, String origen, String destino, String paquete, Date fechallegada, String remitente,
+	public Articulo(int id, String origen, String destino, String paquete, String fechallegada, String remitente,
 			String transportista, double precio) {
 		super();
 		this.id = id;
@@ -69,12 +68,12 @@ public class Articulo {
 	}
 
 
-	public Date getFechallegada() {
+	public String getFechallegada() {
 		return fechallegada;
 	}
 
 
-	public void setFechallegada(Date fechallegada) {
+	public void setFechallegada(String fechallegada) {
 		this.fechallegada = fechallegada;
 	}
 
